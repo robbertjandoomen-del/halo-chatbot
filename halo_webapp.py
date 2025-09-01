@@ -26,10 +26,11 @@ def split_text(text, chunk_size=500):
 def embed_chunks(chunks):
     vectors = []
     for chunk in chunks:
-        response = openai.Embedding.create(
-            input=chunk, model="text-embedding-ada-002"
+        response = openai.embeddings.create(
+            model="text-embedding-3-small",
+            input=chunk
         )
-        vectors.append(response["data"][0]["embedding"])
+        vectors.append(response.data[0].embedding)
     return np.array(vectors).astype("float32")
 
 def build_index(vectors):
